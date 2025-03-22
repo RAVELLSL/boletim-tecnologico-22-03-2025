@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boletim Tecnológico</title>
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #333, #000);
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin: 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .container {
+      width: 90%;
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    .edition-info {
+      text-align: center;
+      font-size: 16px;
+      color: #666;
+      margin: 15px 0;
+    }
+
+    .section-title {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #333;
+      padding-bottom: 5px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* Configuração das seções para centralizar os cards */
+    .main-section, .innovation-section, .deu-ruim-section, .news-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Centraliza os cards horizontalmente */
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 300px; /* Define uma largura fixa para os cards */
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 30px;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* Estilos para os modais */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 12px;
+      width: 60%;
+      height: 80%;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .modal-content img {
+      width: 80%;
+      height: auto;
+      margin: 20px auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .modal-content p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #555;
+      text-align: justify;
+      margin-top: 20px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      color: #333;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    /* Estilos responsivos */
+    @media (max-width: 1024px) {
+      .modal-content {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main-section, .innovation-section, .deu-ruim-section, .news-section {
+        flex-direction: column;
+        align-items: center; /* Centraliza os cards em telas pequenas */
+      }
+
+      .card h2 {
+        font-size: 16px;
+      }
+
+      .card img {
+        height: auto;
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
+
+      .modal-content {
+        width: 95%;
+        height: 90%;
+        padding: 15px;
+      }
+
+      .modal-content h2 {
+        font-size: 20px;
+      }
+
+      .modal-content p {
+        font-size: 16px;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Boletim Tecnológico</h1>
+  </header>
+
+  <div class="edition-info">
+    <p>Edição de 22/03/2025</p>
+  </div>
+
+  <!-- Seção: Inteligência Artificial -->
+  <h2 class="section-title">Inteligência Artificial</h2>
+  <div class="main-section">
+    <!-- Card -->
+    <div class="card" id="card1">
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2024/09/shutterstock_2372541033-e1742232065148-1536x865.jpg" 
+           alt="IA inteligente igual humanos é questão de tempo, diz CEO do Google DeepMind">
+      <h2>IA inteligente igual humanos é questão de tempo, diz CEO do Google DeepMind</h2>
+    </div>
+
+    <!-- Card -->
+    <div class="card" id="card2">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/10/zoom-1920x1080.jpg" 
+             alt="IA do Zoom vai realizar tarefas por você">
+        <h2>IA do Zoom vai realizar tarefas por você</h2>
+      </div>
+
+      <!-- Card -->
+    <div class="card" id="card3">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/image-1-2.jpg" 
+             alt="Robô que faz café pode revolucionar máquinas de IA">
+        <h2>Robô que faz café pode revolucionar máquinas de IA</h2>
+      </div>
+
+      <!-- Card -->
+    <div class="card" id="card4">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/10/shutterstock_2205639393-1920x1080.jpg" 
+             alt="EUA: tribunal define que obras criadas por IA não podem ser protegidas por direitos autorais">
+        <h2>EUA: tribunal define que obras criadas por IA não podem ser protegidas por direitos autorais</h2>
+      </div>
+
+    </div>  
+
+
+
+  <!-- Seção: Inovação Tecnológica -->
+  <h2 class="section-title">Inovação Tecnológica</h2>
+  <div class="innovation-section">
+    <!-- Card  -->
+    <div class="card" id="card5">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/d-wave-advantage2-1920x1080.jpg" 
+             alt="Computador quântico teria feito cálculo que levaria 1 milhão de anos em apenas 20 minutos">
+        <h2>Computador quântico teria feito cálculo que levaria 1 milhão de anos em apenas 20 minutos</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card6">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/fotossintese-1920x1080.jpg" 
+             alt="Cientistas estão mais perto de recriar a fotossíntese em laboratório">
+        <h2>Cientistas estão mais perto de recriar a fotossíntese em laboratório</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card7">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/3d-station-1920x1080.jpg" 
+             alt="Estação de trem no Japão será construída em 6 horas com impressão 3D">
+        <h2>Estação de trem no Japão será construída em 6 horas com impressão 3D</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card8">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/10/nvidia-CEO-1920x1080.jpg" 
+             alt="Como a Nvidia pode transformar a robótica com o GR00T N1">
+        <h2>Como a Nvidia pode transformar a robótica com o GR00T N1</h2>
+      </div>
+
+  </div>
+
+
+
+  <!-- Seção: Deu Ruim -->
+  <h2 class="section-title">Deu Ruim!?</h2>
+  <div class="deu-ruim-section">
+    <!-- Card  -->    
+      <div class="card" id="card9">
+        <img src="https://tm.ibxk.com.br/2025/03/20/20170648196046.jpg?ims=1280x480" 
+             alt="Provedor de internet do Ceará encerra atividades após sofrer ataques de facção criminosa">
+        <h2>Provedor de internet do Ceará encerra atividades após sofrer ataques de facção criminosa</h2>
+      </div>
+
+       <!-- Card  -->    
+       <div class="card" id="card10">
+        <img src="https://t.ctcdn.com.br/GSz71qez8j2LWWaVuV-AkCLCeZY=/1024x576/smart/i732776.jpeg" 
+             alt="Erro humano causa 95% das falhas de segurança, revela estudo">
+        <h2>Erro humano causa 95% das falhas de segurança, revela estudo</h2>
+      </div>
+
+       <!-- Card  -->    
+       <div class="card" id="card11">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/crime-IA-1920x1080.jpg" 
+             alt="Europol alerta para uso de inteligência artificial em atividades criminosas">
+        <h2>Europol alerta para uso de inteligência artificial em atividades criminosas</h2>
+      </div>
+
+       <!-- Card  -->    
+       <div class="card" id="card12">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/08/mundo_conectado-1920x1080.jpg" 
+             alt="Por que a maioria dos países está sofrendo para desligar o 2G?">
+        <h2>Por que a maioria dos países está sofrendo para desligar o 2G?</h2>
+      </div>
+    
+  </div>
+
+
+
+  <!-- Seção: Notícias Variadas -->
+  <h2 class="section-title">Notícias Variadas</h2>
+  <div class="news-section">
+    <!-- Card  -->
+    <div class="card" id="card13">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/digital-skills-1920x1000.jpg" 
+             alt="Conheça dez habilidades digitais que os brasileiros ainda não dominam">
+        <h2>Conheça as habilidades digitais que os brasileiros ainda não dominam</h2>
+      </div>
+
+       <!-- Card  -->
+    <div class="card" id="card14">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/download-4-1920x1080.webp" 
+             alt="Conheça o Hyperloop do Brasil que vai movimentar contêineres a 595 km/h">
+        <h2>Conheça o Hyperloop do Brasil que vai movimentar contêineres a 595 km/h</h2>
+      </div>
+
+
+       <!-- Card  -->
+    <div class="card" id="card15">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/sol_artificial_2.webp" 
+             alt="EUA estão perdendo a corrida do “Sol artificial” para a China">
+        <h2>EUA estão perdendo a corrida do “Sol Artificial” para a China</h2>
+      </div>
+
+
+       <!-- Card  -->
+    <div class="card" id="card16">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/Captura-de-tela-2025-03-19-102046-1920x1080.png" 
+             alt="Tecnologia permite ouvir música sem fone e sem incomodar ninguém ao lado">
+        <h2>Tecnologia permite ouvir música sem fone e sem incomodar ninguém ao lado</h2>
+      </div>
+
+
+      </div>
+  </div>
+
+  <!-- ========================== 
+       MÓDULOS (MODAIS) 
+       ========================== -->
+
+<!-- Modal 1 -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal1')">&times;</span>
+      <h2>IA com inteligência humana pode surgir na próxima década, afirma CEO do Google DeepMind</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2024/09/shutterstock_2372541033-e1742232065148-1536x865.jpg" alt="Imagem representativa da matéria">
+      <p>Demis Hassabis, CEO do Google DeepMind, afirmou que o desenvolvimento de uma inteligência artificial geral (IAG) — capaz de igualar as capacidades cognitivas humanas — é apenas uma questão de tempo. Segundo ele, esse avanço pode ocorrer dentro de cinco a dez anos.</p>
+  
+      <h3>O Caminho para a IAG</h3>
+      <p>Durante uma coletiva em Londres, Hassabis explicou que os atuais sistemas de IA ainda dependem de orientação humana e enfrentam dificuldades para compreender o mundo real de forma ampla. Para alcançar a IAG, será essencial que esses sistemas consigam planejar, raciocinar e generalizar comportamentos, além de interpretar contextos complexos.</p>
+      <p>Apesar do progresso, Hassabis reconheceu que "ainda não chegamos lá" e que há desafios significativos no caminho. Entre eles, a construção de modelos que consigam representar com precisão a realidade ao nosso redor.</p>
+  
+      <h3>Visões Divergentes</h3>
+      <p>Outros líderes do setor também se pronunciaram sobre o tema. O CEO da Anthropic, Dario Amodei, acredita que uma IAG com desempenho superior ao humano pode surgir em dois ou três anos. Já Robin Li, do Baidu, é mais cético e estima que isso levará mais de uma década. Elon Musk, por sua vez, aposta em um prazo até 2026, com base no desenvolvimento de suas próprias plataformas de IA.</p>
+      <p>A discussão sobre a chegada da IAG reforça o debate global sobre os limites e as responsabilidades do avanço tecnológico.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 2 -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal2')">&times;</span>
+      <h2>Zoom expande integração com IA para automatizar tarefas e otimizar reuniões</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2024/10/zoom-1920x1080.jpg" alt="Imagem representativa da matéria">
+      <p>O Zoom anunciou uma série de atualizações em sua inteligência artificial, com foco em automatizar tarefas rotineiras dos usuários. A plataforma agora será capaz de agendar reuniões de acompanhamento, gerar atas e documentos de reuniões, além de criar videoclipes com base nos encontros virtuais.</p>
+  
+      <h3>Gravador de Voz e Recursos Gratuitos</h3>
+      <p>Uma das principais novidades é um novo gravador de voz que poderá registrar, transcrever e resumir reuniões presenciais. Esses recursos estarão disponíveis gratuitamente, reforçando o compromisso da empresa em tornar a IA acessível a todos os usuários.</p>
+  
+      <h3>Novo Painel e Integração com AI Companion</h3>
+      <p>O novo painel “tarefas”, acessível no ambiente Workplace, centralizará as ações do AI Companion, ferramenta que também poderá gerar resumos em tempo real durante reuniões e chamadas. Essa funcionalidade está prevista para chegar ao público em maio.</p>
+  
+      <h3>IA Personalizada com Avatares Digitais</h3>
+      <p>Além disso, o Zoom planeja lançar o Custom AI Companion, uma versão personalizada da IA, que permitirá a criação de avatares digitais do usuário. Essa funcionalidade, disponível por assinatura mensal de US$ 12, poderá ser usada para envio de mensagens em nome do usuário.</p>
+      <p>Segundo a diretora de produtos da Zoom, Smita Hashim, as inovações refletem a estratégia da empresa de incorporar a IA em todos os aspectos da plataforma, tornando as interações mais práticas e produtivas.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 3 -->
+<div id="modal3" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal3')">&times;</span>
+      <h2>Robô que faz café pode ser marco na evolução da IA aplicada à robótica</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/image-1-2.jpg" alt="Imagem representativa da matéria">
+      <p>Pesquisadores da Universidade de Edimburgo desenvolveram um robô de inteligência artificial capaz de preparar café em ambientes dinâmicos, sinalizando um avanço significativo na integração entre raciocínio, movimento e percepção — pilares da cognição humana.</p>
+  
+      <h3>Robô Autônomo com Compreensão Verbal</h3>
+      <p>O robô, equipado com um braço articulado de sete juntas, sensores de alta precisão e algoritmos de IA avançados, é capaz de executar a tarefa a partir de comandos verbais. Ele localiza utensílios, manuseia ingredientes e se adapta a imprevistos em tempo real, como mudanças no ambiente ou obstáculos inesperados.</p>
+  
+      <h3>Pesquisa e Abordagem Integrada</h3>
+      <p>A pesquisa, publicada na revista Nature Machine Intelligence, destaca a importância de unir áreas tradicionalmente separadas da IA e da robótica. Segundo os cientistas, essa abordagem integrada pode levar ao desenvolvimento de máquinas com capacidades mais próximas das humanas, capazes de operar de forma autônoma em cenários complexos, como cozinhas movimentadas ou ambientes industriais.</p>
+  
+      <h3>Avanços com Tarefas Simples</h3>
+      <p>O estudo reforça a ideia de que tarefas aparentemente simples, como preparar uma xícara de café, podem representar marcos fundamentais para o futuro da robótica inteligente.</p>
+    </div>
+  </div>
+
+  <!-- Modal 4 -->
+<div id="modal4" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal4')">&times;</span>
+      <h2>Tribunal dos EUA decide: obras criadas exclusivamente por IA não têm direitos autorais</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2024/10/shutterstock_2205639393-1920x1080.jpg" alt="Imagem representativa da matéria">
+      <p>Um tribunal federal de apelações dos Estados Unidos determinou que obras criadas inteiramente por inteligência artificial, sem intervenção humana, não são elegíveis para proteção por direitos autorais. A decisão, tomada em Washington, reforça o entendimento de que a autoria deve ser atribuída a humanos para que haja salvaguarda legal.</p>
+  
+      <h3>O Caso Dabus</h3>
+      <p>O caso analisado envolvia uma imagem produzida pelo sistema de IA “Dabus”, criado por Stephen Thaler. O Escritório de Direitos Autorais dos EUA já havia rejeitado o pedido de Thaler em 2022, argumentando que, segundo a legislação atual, apenas obras com autores humanos podem receber proteção legal. A nova decisão da corte de apelações mantém esse entendimento.</p>
+  
+      <h3>Precedente Jurídico e Novos Desafios</h3>
+      <p>O veredito estabelece um importante precedente para disputas futuras envolvendo criações geradas por IA, especialmente em meio ao crescimento da arte digital e de conteúdos produzidos por plataformas como Midjourney e outras ferramentas generativas.</p>
+  
+      <h3>Debates sobre Propriedade Intelectual</h3>
+      <p>O advogado de Thaler declarou que irá recorrer, enquanto o Escritório de Direitos Autorais celebrou a decisão como coerente com a lei vigente. A decisão reacende o debate sobre a necessidade de atualizar as normas de propriedade intelectual frente ao avanço da inteligência artificial.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 5 -->
+<div id="modal5" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal5')">&times;</span>
+      <h2>Computador quântico da D-Wave realiza cálculo em 20 minutos que levaria 1 milhão de anos, mas especialistas contestam</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/d-wave-advantage2-1920x1080.jpg" alt="Imagem representativa da matéria">
+      <p>A empresa D-Wave afirma ter alcançado um marco na computação quântica com seu sistema Advantage2, ao resolver em apenas 20 minutos um problema de simulação de materiais magnéticos que, segundo a companhia, levaria cerca de um milhão de anos em computadores tradicionais.</p>
+  
+      <h3>Supremacia Quântica e Aplicações Práticas</h3>
+      <p>A façanha é apresentada como um exemplo de “supremacia quântica” — conceito que define quando um computador quântico supera os melhores sistemas clássicos em uma tarefa específica. A simulação realizada pela D-Wave pode ter implicações em áreas como sensores, motores e supercondutores, por sua complexidade e relevância prática.</p>
+  
+      <h3>Controvérsias na Comunidade Científica</h3>
+      <p>No entanto, a comunidade científica ainda está dividida sobre a legitimidade dessa conquista. Alguns especialistas argumentam que computadores convencionais podem resolver problemas semelhantes com métodos otimizados. O físico Dries Sels, por exemplo, declarou ter obtido resultados parecidos usando um laptop comum.</p>
+  
+      <h3>Avanço com Desafios</h3>
+      <p>Apesar da polêmica, o experimento, publicado na revista Science, representa um avanço relevante no uso prático da computação quântica, uma área que continua evoluindo rapidamente, embora ainda enfrente desafios de validação e comparação com a tecnologia clássica.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 6 -->
+<div id="modal6" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal6')">&times;</span>
+      <h2>Pesquisadores recriam etapa da fotossíntese e abrem caminho para novas fontes de energia limpa</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/fotossintese-1920x1080.jpg" alt="Imagem representativa da matéria">
+      <p>Cientistas das universidades de Würzburg (Alemanha) e Yonsei (Coreia do Sul) deram um passo significativo em direção à fotossíntese artificial. Em estudo publicado na revista Nature Chemistry, a equipe desenvolveu um sistema de transporte de elétrons que simula com precisão uma das etapas essenciais da fotossíntese natural.</p>
+  
+      <h3>Estrutura Inspirada nas Plantas</h3>
+      <p>Utilizando moléculas empilhadas de perileno bisimida (PBI), os pesquisadores criaram uma estrutura capaz de absorver luz e transferir carga elétrica de forma eficiente — semelhante ao que ocorre em células vegetais. Esse tipo de separação de carga é fundamental para evitar perdas de energia e ampliar o tempo de vida dos estados carregados.</p>
+  
+      <h3>Observações com Espectroscopia Ultrarápida</h3>
+      <p>O processo foi observado com técnicas de espectroscopia ultrarrápida e demonstrou que estruturas sintéticas podem replicar, com alto desempenho, mecanismos biológicos de conversão de energia.</p>
+  
+      <h3>Avanço Rumo à Energia Limpa</h3>
+      <p>A descoberta tem potencial para revolucionar o desenvolvimento de células solares orgânicas, ao possibilitar a criação de materiais semicondutores mais eficientes e duráveis. Também representa um avanço importante na busca por sistemas de fotossíntese artificial, que visam gerar energia limpa a partir da luz solar, inspirados no funcionamento das plantas.</p>
+    </div>
+  </div>
+  
+<!-- Modal 7 -->
+<div id="modal7" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal7')">&times;</span>
+      <h2>Estação de trem no Japão será construída em apenas 6 horas com tecnologia de impressão 3D</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/3d-station-1920x1080.jpg" alt="Imagem representativa da matéria">
+      <p>A cidade de Arida, na província de Wakayama, no Japão, receberá em breve uma estação de trem inovadora: construída em apenas seis horas por meio de impressão 3D. O projeto está sendo desenvolvido pela West Japan Railway Company, em parceria com a JR West Innovations e a Serendix.</p>
+  
+      <h3>Design Local e Dimensões Compactas</h3>
+      <p>A estação Hatsushima terá dimensões compactas — 6,3 metros de largura, 2,6 metros de altura e 2,1 metros de profundidade — e contará com design inspirado na cultura local, incluindo decorações com laranjas e peixes, símbolos típicos da região.</p>
+  
+      <h3>Construção Modular com Concreto</h3>
+      <p>Fabricada com concreto armado, a estrutura será impressa em partes em um local externo, utilizando uma mistura similar ao cimento. Após a impressão, os módulos serão montados no terreno da estação, em um intervalo entre o último trem de um dia e o primeiro do dia seguinte.</p>
+  
+      <h3>Inovação Sustentável</h3>
+      <p>Com um design que visa integrar-se à comunidade local e oferecer resistência à corrosão, o projeto representa um avanço em construções sustentáveis e de baixo custo. Se for bem-sucedido, a tecnologia poderá ser expandida para outras localidades, substituindo estações antigas de madeira por estruturas modernas, mais duráveis e rápidas de montar.</p>
+      <p>A inauguração da nova estação está prevista para 25 de março.</p>
+    </div>
+  </div>
+
+  <!-- Modal 8 -->
+<div id="modal8" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal8')">&times;</span>
+      <h2>Nvidia apresenta GR00T N1 e promete revolucionar a robótica com modelo aberto e inteligente</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2024/10/nvidia-CEO-1920x1080.jpg" alt="Imagem representativa da matéria">
+      <p>Durante a GTC 2025, a Nvidia revelou o Isaac GR00T N1, um modelo de código aberto criado para impulsionar o desenvolvimento de robôs humanoides. A iniciativa marca o início de uma nova fase para a robótica, com o CEO Jensen Huang afirmando que “a era da robótica generalista chegou”.</p>
+  
+      <h3>Cognição Inspirada no Cérebro Humano</h3>
+      <p>O GR00T N1 combina um sistema de cognição inspirado no cérebro humano. Ele integra dois módulos: o Sistema 1, que responde com ações rápidas e reflexivas, e o Sistema 2, responsável por raciocínio complexo e planejamento estratégico, utilizando linguagem natural e visão computacional.</p>
+  
+      <h3>Exemplo Prático e Adaptação em Tempo Real</h3>
+      <p>Um dos exemplos práticos já demonstrados foi o robô NEO Gamma, da empresa 1X, que utilizou o GR00T N1 para realizar tarefas de organização de forma autônoma, com adaptação em tempo real ao ambiente.</p>
+  
+      <h3>Parcerias e Democratização da Robótica</h3>
+      <p>Entre os apoiadores do projeto estão gigantes da robótica como Boston Dynamics, Agility Robotics, Mentee Robotics e Neura Robotics. O modelo está disponível publicamente, com dados de treinamento e ambientes de simulação distribuídos via Hugging Face e GitHub.</p>
+      <p>A abertura do GR00T N1 ao público sinaliza o interesse da Nvidia em democratizar a robótica avançada, promovendo inovação em áreas que vão de serviços domésticos à automação industrial.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 9 -->
+<div id="modal9" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal9')">&times;</span>
+      <h2>Provedora de internet encerra atividades no Ceará após ataques de facção criminosa</h2>
+      <img src="https://tm.ibxk.com.br/2025/03/20/20170648196046.jpg?ims=1280x480" alt="Imagem representativa da matéria">
+      <p>A GPX Telecom, provedora de internet com sede em Caucaia, na região metropolitana de Fortaleza, anunciou o encerramento de suas atividades após sofrer ataques coordenados de uma facção criminosa. A decisão foi comunicada pela empresa em seu perfil oficial, relatando a destruição completa de sua estrutura em menos de 20 minutos.</p>
+  
+      <h3>Onda de Ataques no Ceará</h3>
+      <p>Desde fevereiro, o Ceará tem registrado uma série de ataques contra provedores de internet, incluindo corte de cabos, depredações e incêndios em veículos e lojas. Ao menos oito empresas foram alvo, afetando a conectividade em municípios como Fortaleza, São Gonçalo do Amarante, Caridade e a própria Caucaia.</p>
+  
+      <h3>Extorsões e Facções Criminosas</h3>
+      <p>As investigações apontam que os crimes são cometidos por integrantes do Comando Vermelho, que estariam cobrando uma "taxa de segurança" das operadoras para permitir sua atuação em determinadas áreas. Empresas que se recusam a pagar essa extorsão tornam-se alvos dos ataques.</p>
+  
+      <h3>Consequências e Medidas de Segurança</h3>
+      <p>Estima-se que cerca de 400 mil pessoas na Grande Fortaleza vivem em áreas dominadas pelo crime organizado, onde operam provedores clandestinos sem fiscalização. Diante do cenário, o governo estadual montou uma força-tarefa que já prendeu 27 suspeitos e segue investigando o caso.</p>
+      <p>O fechamento da GPX Telecom escancara os desafios de segurança enfrentados por empresas que prestam serviços essenciais em áreas vulneráveis, levantando preocupações sobre o acesso à internet e à comunicação em comunidades afetadas pela violência.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 10 -->
+<div id="modal10" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal10')">&times;</span>
+      <h2>Erro humano é responsável por 95% das falhas de segurança, aponta pesquisa</h2>
+      <img src="https://t.ctcdn.com.br/GSz71qez8j2LWWaVuV-AkCLCeZY=/1024x576/smart/i732776.jpeg" alt="Imagem representativa da matéria">
+      <p>Um novo estudo da empresa Mimecast revelou que 95% das falhas de segurança registradas em 2024 tiveram origem em erros humanos. A pesquisa, que ouviu 1.100 profissionais de TI e segurança, indica que, apesar dos altos investimentos em tecnologia, o comportamento dos colaboradores continua sendo o principal ponto de vulnerabilidade nas empresas.</p>
+  
+      <h3>Principais Fatores de Risco</h3>
+      <p>Entre os fatores mais recorrentes estão o uso de senhas fracas ou repetidas, o compartilhamento indevido de credenciais e a queda em golpes de phishing. A pesquisa destaca ainda a falta de treinamento eficaz e a fadiga digital como agravantes, mesmo em organizações que oferecem capacitações regulares.</p>
+  
+      <h3>Pequena Parcela, Grande Impacto</h3>
+      <p>Um dado alarmante mostra que apenas 8% dos funcionários são responsáveis por 80% dos incidentes, evidenciando a importância de políticas direcionadas de prevenção e monitoramento.</p>
+  
+      <h3>IA: Aliada e Risco</h3>
+      <p>Embora 95% das empresas já usem inteligência artificial em suas estratégias de defesa, a IA também levanta preocupações. Mais de 80% dos gestores temem vazamentos de dados por meio de ferramentas generativas, e mais da metade reconhece não estar preparada para lidar com ameaças baseadas em IA.</p>
+  
+      <h3>Cultura Organizacional de Segurança</h3>
+      <p>O relatório conclui que apenas tecnologia não basta: é fundamental fortalecer a cultura organizacional de segurança e investir na capacitação contínua dos colaboradores para mitigar riscos de forma eficaz.</p>
+    </div>
+  </div>
+
+  <!-- Modal 11 -->
+<div id="modal11" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal11')">&times;</span>
+      <h2>Europol alerta: inteligência artificial amplia alcance e sofisticação de crimes organizados</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/crime-IA-1920x1080.jpg" alt="Imagem representativa da matéria">
+      <p>A Europol emitiu um alerta sobre o crescente uso da inteligência artificial por organizações criminosas, destacando que a tecnologia está sendo empregada em ataques sofisticados, alguns supostamente ligados a potências como Rússia e China. O relatório mais recente da agência classifica essa ameaça como “sem precedentes” para a segurança dos países da União Europeia.</p>
+  
+      <h3>IA como Ferramenta de Sabotagem e Espionagem</h3>
+      <p>Segundo a agência, redes criminosas estão atuando como intermediárias em ações de sabotagem e ciberataques politicamente motivados, transformando crimes tradicionais em ferramentas de interferência geopolítica. Esses grupos têm utilizado IA para criar malwares avançados, executar fraudes automatizadas, como golpes de phishing, e desenvolver mídias sintéticas capazes de enganar com precisão por meio da imitação de vozes e rostos.</p>
+  
+      <h3>Crimes Digitais em Expansão</h3>
+      <p>Além das ameaças digitais, a Europol alerta que crimes como tráfico de drogas e imigração ilegal também estão migrando para ambientes online, com o suporte de tecnologias emergentes como blockchain e computação quântica, que aumentam a complexidade e a escala das operações.</p>
+  
+      <h3>Resposta Internacional Urgente</h3>
+      <p>O relatório reforça a necessidade de políticas internacionais mais rigorosas e estratégias coordenadas entre países para enfrentar o impacto da IA no crime organizado. A agência destaca que a integração entre redes criminosas e atores estatais hostis torna a resposta a essas ameaças ainda mais desafiadora.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 12 -->
+<div id="modal12" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal12')">&times;</span>
+      <h2>Desligamento do 2G avança no mundo, mas exclusão digital é desafio para países em desenvolvimento</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2024/08/mundo_conectado-1920x1080.jpg" alt="Imagem representativa da matéria">
+      <p>Mais de 60 países, incluindo Brasil, Estados Unidos, China e Índia, já iniciaram ou planejam o desligamento de suas redes 2G, com o objetivo de liberar espectro para tecnologias mais modernas, como o 4G e o 5G. No entanto, a transição tem sido dificultada por fatores econômicos, culturais e tecnológicos.</p>
+  
+      <h3>Milhões Ainda Dependem do 2G</h3>
+      <p>Apesar da queda nas vendas globais de celulares básicos — de 374 milhões em 2019 para 200 milhões em 2024 — milhões de pessoas ainda dependem da rede 2G, principalmente por limitações financeiras e falta de acesso à tecnologia. Em países como Índia, Vietnã e África do Sul, o custo dos smartphones ainda representa até 30% da renda mensal para parte da população.</p>
+  
+      <h3>Impacto em Dispositivos e Infraestruturas</h3>
+      <p>Além do uso pessoal, muitos dispositivos essenciais, como sensores ambientais e equipamentos industriais, continuam operando exclusivamente em 2G. Isso tem forçado governos a adiar prazos de desligamento, como ocorreu na África do Sul.</p>
+  
+      <h3>Iniciativas para Inclusão Digital</h3>
+      <p>Algumas iniciativas bem-sucedidas têm surgido. No Vietnã, a estatal Viettel distribuiu 700 mil celulares 4G gratuitos, enquanto na Índia, a Reliance Jio promoveu o JioPhone, celular 4G de baixo custo que se tornou líder global no segmento. Tecnologias como o Cloud Phone, que roda aplicativos populares em celulares simples, também ajudam a acelerar a transição.</p>
+  
+      <h3>Conectividade Universal como Meta</h3>
+      <p>Especialistas defendem ações coordenadas entre governos e setor privado para evitar a exclusão digital, com foco em treinamento, subsídios e inovação acessível. A migração para o 4G e 5G é inevitável, mas precisa ser inclusiva para garantir conectividade universal.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 13 -->
+<div id="modal13" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal13')">&times;</span>
+      <h2>Estudo revela as habilidades digitais que os brasileiros mais têm dificuldade em dominar</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/digital-skills-1920x1000.jpg" alt="Imagem representativa da matéria">
+      <p>Uma pesquisa conduzida pela Locaweb em parceria com a Conversio revelou que grande parte dos brasileiros ainda enfrenta barreiras para dominar competências digitais essenciais, mesmo em um cenário cada vez mais conectado. O levantamento entrevistou 500 pessoas em todo o país e apontou as dez habilidades tecnológicas menos dominadas — com destaque para análise de dados, produção de infoprodutos e criação de sites.</p>
+  
+      <h3>Dificuldades em Análise de Dados e IA</h3>
+      <p>Mais da metade dos entrevistados declarou dificuldade em interpretar métricas e dados, competência chave no ambiente digital e para negócios online. Outros desafios incluem gerenciamento de campanhas pagas, domínio de inteligência artificial e administração de e-commerces.</p>
+  
+      <h3>Competências Mais Valorizadas</h3>
+      <p>Apesar disso, 81% dos participantes reconhecem a IA como a habilidade mais promissora para o mercado de trabalho. Gerenciar anúncios pagos, montar planilhas e editar vídeos também aparecem entre as competências mais valorizadas.</p>
+  
+      <h3>Obstáculos de Acesso à Capacitação</h3>
+      <p>O estudo ainda destaca obstáculos como custo e falta de tempo, que dificultam o acesso a cursos e treinamentos, mesmo entre os que demonstram interesse em se qualificar. A falta de capacitação representa um entrave para o crescimento profissional e para a inclusão digital em um mercado cada vez mais exigente.</p>
+  
+      <h3>Urgência em Educação Tecnológica</h3>
+      <p>A conclusão é clara: sem ações concretas de educação tecnológica, grande parte da população corre o risco de ficar para trás na economia digital.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 14 -->
+<div id="modal14" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal14')">&times;</span>
+      <h2>Brasil avança em projeto de Hyperloop para transporte de cargas a quase 600 km/h</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/download-4-1920x1080.webp" alt="Imagem representativa da matéria">
+      <p>A Hyperloop Transportation Technologies (HTT) anunciou o HyperPort, projeto de transporte de contêineres por cápsulas de alta velocidade em tubos de vácuo parcial. O sistema, que promete operar a até 595 km/h, visa revolucionar a logística brasileira conectando o Porto de Santos a grandes centros como São Paulo, Campinas e, futuramente, São José do Rio Preto.</p>
+  
+      <h3>Primeira Fase: Santos a Campinas</h3>
+      <p>A primeira fase do projeto cobrirá os 169 km entre Santos e Campinas, reduzindo o tempo de transporte para cerca de 30 minutos. Com isso, estima-se a retirada de até 4.000 caminhões por dia das estradas, além da redução de 906 toneladas diárias de CO₂ até 2060.</p>
+  
+      <h3>Investimento e Retorno Financeiro</h3>
+      <p>O investimento inicial da fase piloto é estimado em US$ 9,6 bilhões, com retorno projetado em US$ 17,1 bilhões. Caso financiado pelo governo, o projeto teria uma taxa interna de retorno (TIR) de 62,7% e um valor presente líquido (VPL) de US$ 4,8 bilhões.</p>
+  
+      <h3>Próximos Passos</h3>
+      <p>O próximo passo será a conclusão do Estudo de Viabilidade Técnica, Econômica e Ambiental (EVTEA), que definirá a viabilidade e os modelos de financiamento necessários. Se concretizado, o HyperPort promete transformar a infraestrutura logística do país, com ganhos em tempo, sustentabilidade e economia.</p>
+    </div>
+  </div>
+
+  <!-- Modal 15 -->
+<div id="modal15" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal15')">&times;</span>
+      <h2>Corrida pelo “Sol artificial”: China avança enquanto EUA perdem liderança na fusão nuclear</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/sol_artificial_2.webp" alt="Imagem representativa da matéria">
+      <p>A disputa global para dominar a fusão nuclear — vista como a fonte de energia limpa mais promissora — está sendo liderada pela China, que investe o dobro dos recursos públicos em comparação aos Estados Unidos e acelera a construção de instalações em ritmo recorde.</p>
+  
+      <h3>Energia das Estrelas</h3>
+      <p>A fusão nuclear tem o potencial de gerar energia abundante sem emissão de carbono ou resíduos de longa duração, simulando o processo que ocorre no interior das estrelas. No entanto, transformar essa teoria em aplicação prática segue sendo um dos maiores desafios científicos da atualidade.</p>
+  
+      <h3>Infraestrutura Pública vs. Investimento Privado</h3>
+      <p>Os EUA ainda lideram no investimento privado, com startups como Helion, Commonwealth Fusion Systems e TAE Technologies arrecadando bilhões de dólares. Entretanto, a infraestrutura pública americana, mais antiga e menos financiada, perde espaço diante dos megaprojetos chineses, como o complexo CRAFT e o tokamak BEST, com conclusão prevista até 2027.</p>
+  
+      <h3>Formação e Suprimentos Estratégicos</h3>
+      <p>A China também domina a formação de especialistas, com dez vezes mais doutores em fusão do que os EUA e controle crescente sobre a cadeia de suprimentos de materiais críticos. Imagens de satélite revelam instalações chinesas maiores e mais avançadas do que as americanas, levantando preocupações sobre uma possível perda definitiva de liderança tecnológica por parte dos EUA.</p>
+  
+      <h3>Geopolítica da Energia do Futuro</h3>
+      <p>Enquanto a startup Helion planeja entregar energia de fusão à rede elétrica até 2028, o cenário aponta para um novo equilíbrio de poder na corrida energética do século 21, com impactos diretos sobre geopolítica, inovação e competitividade global.</p>
+    </div>
+  </div>
+  
+  <!-- Modal 16 -->
+<div id="modal16" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal16')">&times;</span>
+      <h2>Nova tecnologia permite ouvir música sem fones e sem incomodar quem está por perto</h2>
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/Captura-de-tela-2025-03-19-102046-1920x1080.png" alt="Imagem representativa da matéria">
+      <p>Pesquisadores da Penn State desenvolveram uma tecnologia inovadora que cria zonas sonoras privadas, permitindo que uma pessoa ouça música ou podcasts sem fones de ouvido e sem interferir no ambiente ao redor.</p>
+  
+      <h3>“Fones Invisíveis” com Ultrassom</h3>
+      <p>O sistema utiliza dois transdutores ultrassônicos combinados com metassuperfícies acústicas — lentes que direcionam ondas sonoras. Essas ondas, inaudíveis por si só, cruzam-se em um ponto específico, gerando som audível apenas naquele local. Isso cria um “enclave audível” exclusivo, semelhante a um fone de ouvido invisível.</p>
+  
+      <h3>Alcance e Privacidade Sonora</h3>
+      <p>No estágio atual, o som pode ser transmitido a cerca de um metro de distância, com volume equivalente ao de uma conversa comum (60 decibéis). A tecnologia permite ainda que o som contorne obstáculos, como a cabeça humana, mantendo a privacidade sonora.</p>
+  
+      <h3>Aplicações Futuras</h3>
+      <p>A inovação abre caminho para aplicações em espaços compartilhados, como escritórios, bibliotecas e transporte público, além de representar um avanço significativo na engenharia acústica. Os resultados foram publicados na revista Proceedings of the National Academy of Sciences.</p>
+    </div>
+  </div>
+  
+
+
+  <!-- Rodapé -->
+  <footer>
+    <p>&copy; 2024 - 2025</p>
+  </footer>
+
+  <!-- Scripts para Modais -->
+  <script>
+    // Seleciona todos os cartões, modais e botões de fechamento
+    const cards = document.querySelectorAll('.card');
+    const modals = document.querySelectorAll('.modal');
+    const closes = document.querySelectorAll('.close');
+
+    // Verifica se a quantidade de cartões e modais corresponde
+    if (cards.length !== modals.length) {
+      console.warn("O número de cartões não corresponde ao número de modais. Verifique seu HTML.");
+    }
+
+    // Adiciona evento de clique aos cartões para abrir o modal correspondente
+    cards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        if (modals[index]) {
+          modals[index].style.display = 'block'; // Exibe o modal correspondente
+        } else {
+          console.error(`Nenhum modal encontrado para o card com índice ${index}. Verifique o HTML.`);
+        }
+      });
+    });
+
+    // Adiciona evento de clique aos botões de fechamento para fechar o modal correspondente
+    closes.forEach((close, index) => {
+      close.addEventListener('click', () => {
+        if (modals[index]) {
+          modals[index].style.display = 'none'; // Esconde o modal correspondente
+        } else {
+          console.error(`Nenhum modal encontrado para o botão de fechamento com índice ${index}. Verifique o HTML.`);
+        }
+      });
+    });
+
+    // Adiciona funcionalidade para fechar o modal ao clicar fora dele
+    window.onclick = function (event) {
+      modals.forEach((modal) => {
+        if (event.target === modal) {
+          modal.style.display = 'none'; // Esconde o modal se o clique for fora do conteúdo
+        }
+      });
+    };
+
+    // Adiciona acessibilidade: fecha o modal ao pressionar a tecla ESC
+    window.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') { // Detecta a tecla ESC
+        modals.forEach((modal) => {
+          modal.style.display = 'none'; // Esconde todos os modais abertos
+        });
+      }
+    });
+  </script>
+</body>
+</html>
